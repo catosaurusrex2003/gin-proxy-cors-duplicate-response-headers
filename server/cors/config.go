@@ -1,9 +1,11 @@
 package cors
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/gin-gonic/gin"
 )
 
@@ -142,6 +144,9 @@ func (cors *cors) validateOrigin(origin string) bool {
 
 func (cors *cors) handlePreflight(c *gin.Context) {
 	header := c.Writer.Header()
+	fmt.Println("in preflight")
+	spew.Dump("header: ", header)
+	spew.Dump("cors.preflightHeaders: ", cors.preflightHeaders)
 	for key, value := range cors.preflightHeaders {
 		header[key] = value
 	}
@@ -169,6 +174,9 @@ func (cors *cors) handlePreflight(c *gin.Context) {
 
 func (cors *cors) handleNormal(c *gin.Context) {
 	header := c.Writer.Header()
+	fmt.Println("in normal")
+	spew.Dump("header: ", header)
+	spew.Dump("cors.normalHeaders: ", cors.normalHeaders)
 	for key, value := range cors.normalHeaders {
 		header[key] = value
 	}
