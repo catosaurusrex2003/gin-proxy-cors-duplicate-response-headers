@@ -147,28 +147,28 @@ func (cors *cors) handlePreflight(c *gin.Context) {
 	fmt.Println("in preflight")
 	spew.Dump("header: ", header)
 	spew.Dump("cors.preflightHeaders: ", cors.preflightHeaders)
-	for key, value := range cors.preflightHeaders {
-		header[key] = value
-	}
 	// for key, value := range cors.preflightHeaders {
-	// 	// Check if the header already exists and merge if it does
-	// 	if existingValue, exists := header[key]; exists {
-	// 		uniqueValues := make(map[string]struct{})
-	// 		for _, v := range existingValue {
-	// 			uniqueValues[v] = struct{}{}
-	// 		}
-	// 		for _, v := range value {
-	// 			uniqueValues[v] = struct{}{}
-	// 		}
-	// 		newValues := []string{}
-	// 		for v := range uniqueValues {
-	// 			newValues = append(newValues, v)
-	// 		}
-	// 		header[key] = newValues
-	// 	} else {
-	// 		header[key] = value
-	// 	}
+	// 	header[key] = value
 	// }
+	for key, value := range cors.preflightHeaders {
+		// Check if the header already exists and merge if it does
+		if existingValue, exists := header[key]; exists {
+			uniqueValues := make(map[string]struct{})
+			for _, v := range existingValue {
+				uniqueValues[v] = struct{}{}
+			}
+			for _, v := range value {
+				uniqueValues[v] = struct{}{}
+			}
+			newValues := []string{}
+			for v := range uniqueValues {
+				newValues = append(newValues, v)
+			}
+			header[key] = newValues
+		} else {
+			header[key] = value
+		}
+	}
 
 }
 
