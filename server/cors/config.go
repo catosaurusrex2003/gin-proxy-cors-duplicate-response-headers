@@ -177,29 +177,30 @@ func (cors *cors) handleNormal(c *gin.Context) {
 	fmt.Println("in normal")
 	spew.Dump("header: ", header)
 	spew.Dump("cors.normalHeaders: ", cors.normalHeaders)
-	for key, value := range cors.normalHeaders {
-		header[key] = value
-	}
 	// for key, value := range cors.normalHeaders {
-	// 	// Check if the header already exists and skip if it does
-	// 	if existingValue, exists := header[key]; exists {
-	// 		// Merge unique values
-	// 		uniqueValues := make(map[string]struct{})
-	// 		for _, v := range existingValue {
-	// 			uniqueValues[v] = struct{}{}
-	// 		}
-	// 		for _, v := range value {
-	// 			uniqueValues[v] = struct{}{}
-	// 		}
-	// 		// Convert map back to slice
-	// 		newValues := []string{}
-	// 		for v := range uniqueValues {
-	// 			newValues = append(newValues, v)
-	// 		}
-	// 		header[key] = newValues
-	// 	} else {
-	// 		header[key] = value
-	// 	}
+	// 	header[key] = value
 	// }
+
+	for key, value := range cors.normalHeaders {
+		// Check if the header already exists and skip if it does
+		if existingValue, exists := header[key]; exists {
+			// Merge unique values
+			uniqueValues := make(map[string]struct{})
+			for _, v := range existingValue {
+				uniqueValues[v] = struct{}{}
+			}
+			for _, v := range value {
+				uniqueValues[v] = struct{}{}
+			}
+			// Convert map back to slice
+			newValues := []string{}
+			for v := range uniqueValues {
+				newValues = append(newValues, v)
+			}
+			header[key] = newValues
+		} else {
+			header[key] = value
+		}
+	}
 
 }
