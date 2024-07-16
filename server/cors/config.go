@@ -143,49 +143,55 @@ func (cors *cors) validateOrigin(origin string) bool {
 func (cors *cors) handlePreflight(c *gin.Context) {
 	header := c.Writer.Header()
 	for key, value := range cors.preflightHeaders {
-		// Check if the header already exists and merge if it does
-		if existingValue, exists := header[key]; exists {
-			uniqueValues := make(map[string]struct{})
-			for _, v := range existingValue {
-				uniqueValues[v] = struct{}{}
-			}
-			for _, v := range value {
-				uniqueValues[v] = struct{}{}
-			}
-			newValues := []string{}
-			for v := range uniqueValues {
-				newValues = append(newValues, v)
-			}
-			header[key] = newValues
-		} else {
-			header[key] = value
-		}
+		header[key] = value
 	}
+	// for key, value := range cors.preflightHeaders {
+	// 	// Check if the header already exists and merge if it does
+	// 	if existingValue, exists := header[key]; exists {
+	// 		uniqueValues := make(map[string]struct{})
+	// 		for _, v := range existingValue {
+	// 			uniqueValues[v] = struct{}{}
+	// 		}
+	// 		for _, v := range value {
+	// 			uniqueValues[v] = struct{}{}
+	// 		}
+	// 		newValues := []string{}
+	// 		for v := range uniqueValues {
+	// 			newValues = append(newValues, v)
+	// 		}
+	// 		header[key] = newValues
+	// 	} else {
+	// 		header[key] = value
+	// 	}
+	// }
 
 }
 
 func (cors *cors) handleNormal(c *gin.Context) {
 	header := c.Writer.Header()
 	for key, value := range cors.normalHeaders {
-		// Check if the header already exists and skip if it does
-		if existingValue, exists := header[key]; exists {
-			// Merge unique values
-			uniqueValues := make(map[string]struct{})
-			for _, v := range existingValue {
-				uniqueValues[v] = struct{}{}
-			}
-			for _, v := range value {
-				uniqueValues[v] = struct{}{}
-			}
-			// Convert map back to slice
-			newValues := []string{}
-			for v := range uniqueValues {
-				newValues = append(newValues, v)
-			}
-			header[key] = newValues
-		} else {
-			header[key] = value
-		}
+		header[key] = value
 	}
+	// for key, value := range cors.normalHeaders {
+	// 	// Check if the header already exists and skip if it does
+	// 	if existingValue, exists := header[key]; exists {
+	// 		// Merge unique values
+	// 		uniqueValues := make(map[string]struct{})
+	// 		for _, v := range existingValue {
+	// 			uniqueValues[v] = struct{}{}
+	// 		}
+	// 		for _, v := range value {
+	// 			uniqueValues[v] = struct{}{}
+	// 		}
+	// 		// Convert map back to slice
+	// 		newValues := []string{}
+	// 		for v := range uniqueValues {
+	// 			newValues = append(newValues, v)
+	// 		}
+	// 		header[key] = newValues
+	// 	} else {
+	// 		header[key] = value
+	// 	}
+	// }
 
 }
