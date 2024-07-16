@@ -4,8 +4,8 @@ import (
 	"net/http/httputil"
 	"net/url"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"main.go/cors"
 )
 
 func main() {
@@ -13,7 +13,7 @@ func main() {
 
 	// Configure CORS
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"*"}
+	config.AllowOrigins = []string{"http://google.com"}
 	config.AllowMethods = []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"}
 	config.AllowHeaders = []string{"Origin", "Content-Length", "Content-Type"}
 	router.Use(cors.New(config))

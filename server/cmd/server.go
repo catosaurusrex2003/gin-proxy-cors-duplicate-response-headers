@@ -3,7 +3,8 @@ package main
 import (
 	"net/http"
 
-	"github.com/gin-contrib/cors"
+	"main.go/cors"
+
 	"github.com/gin-gonic/gin"
 )
 
