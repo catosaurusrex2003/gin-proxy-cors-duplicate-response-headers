@@ -177,16 +177,16 @@ func (cors *cors) handleNormal(c *gin.Context) {
 	fmt.Println("in normal")
 	spew.Dump("header: ", header)
 	spew.Dump("cors.normalHeaders: ", cors.normalHeaders)
-	// for key, value := range cors.normalHeaders {
-	// 	header[key] = value
-	// }
+	requestHeaders := c.Request.Header
+	for key, values := range requestHeaders {
+		fmt.Printf("Original request header: %s: %v\n", key, values)
+	}
 
 	for key, value := range cors.normalHeaders {
 		fmt.Println("modified code working")
 		fmt.Println("key: ", key)
 		fmt.Println("value: ", value)
-		header2 := c.GetHeader(key)
-		spew.Dump("header2: ", header2)
+
 		// Check if the header already exists and skip if it does
 		if existingValue, exists := header[key]; exists {
 			// Merge unique values
