@@ -182,6 +182,7 @@ func (cors *cors) handleNormal(c *gin.Context) {
 	// }
 
 	for key, value := range cors.normalHeaders {
+		fmt.Println("modified code working")
 		// Check if the header already exists and skip if it does
 		if existingValue, exists := header[key]; exists {
 			// Merge unique values
