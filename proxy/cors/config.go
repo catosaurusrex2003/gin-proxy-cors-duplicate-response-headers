@@ -147,9 +147,6 @@ func (cors *cors) handlePreflight(c *gin.Context) {
 	fmt.Println("in preflight")
 	spew.Dump("header: ", header)
 	spew.Dump("cors.preflightHeaders: ", cors.preflightHeaders)
-	// for key, value := range cors.preflightHeaders {
-	// 	header[key] = value
-	// }
 	for key, value := range cors.preflightHeaders {
 		// Check if the header already exists and merge if it does
 		if existingValue, exists := header[key]; exists {
@@ -177,11 +174,10 @@ func (cors *cors) handleNormal(c *gin.Context) {
 	fmt.Println("in normal")
 	spew.Dump("header: ", header)
 	spew.Dump("cors.normalHeaders: ", cors.normalHeaders)
-	// for key, value := range cors.normalHeaders {
-	// 	header[key] = value
-	// }
 	for key, value := range cors.normalHeaders {
 		fmt.Println("modified code working")
+		header2 := c.GetHeader(key)
+		spew.Dump("header2: ", header2)
 		// Check if the header already exists and skip if it does
 		if existingValue, exists := header[key]; exists {
 			// Merge unique values
