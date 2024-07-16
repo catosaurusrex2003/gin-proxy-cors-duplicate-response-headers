@@ -13,7 +13,7 @@ func main() {
 
 	// Configure CORS
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://google.com"}
+	config.AllowOrigins = []string{"*"}
 	config.AllowMethods = []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"}
 	config.AllowHeaders = []string{"Origin", "Content-Length", "Content-Type"}
 	router.Use(cors.New(config))
