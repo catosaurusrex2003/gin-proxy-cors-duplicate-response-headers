@@ -3,7 +3,7 @@ import "./App.css";
 
 function App() {
   const doSomething = async () => {
-    const result = await axios.get("http://15.206.122.167:8081/dummy");
+    const result = await axios.get("http://13.201.43.52:8081/dummy");
     console.log(result);
   };
 

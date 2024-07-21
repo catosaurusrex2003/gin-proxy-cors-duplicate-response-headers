@@ -148,24 +148,27 @@ func (cors *cors) handlePreflight(c *gin.Context) {
 	spew.Dump("header: ", header)
 	spew.Dump("cors.preflightHeaders: ", cors.preflightHeaders)
 	for key, value := range cors.preflightHeaders {
-		// Check if the header already exists and merge if it does
-		if existingValue, exists := header[key]; exists {
-			uniqueValues := make(map[string]struct{})
-			for _, v := range existingValue {
-				uniqueValues[v] = struct{}{}
-			}
-			for _, v := range value {
-				uniqueValues[v] = struct{}{}
-			}
-			newValues := []string{}
-			for v := range uniqueValues {
-				newValues = append(newValues, v)
-			}
-			header[key] = newValues
-		} else {
-			header[key] = value
-		}
+		header[key] = value
 	}
+	// for key, value := range cors.preflightHeaders {
+	// 	// Check if the header already exists and merge if it does
+	// 	if existingValue, exists := header[key]; exists {
+	// 		uniqueValues := make(map[string]struct{})
+	// 		for _, v := range existingValue {
+	// 			uniqueValues[v] = struct{}{}
+	// 		}
+	// 		for _, v := range value {
+	// 			uniqueValues[v] = struct{}{}
+	// 		}
+	// 		newValues := []string{}
+	// 		for v := range uniqueValues {
+	// 			newValues = append(newValues, v)
+	// 		}
+	// 		header[key] = newValues
+	// 	} else {
+	// 		header[key] = value
+	// 	}
+	// }
 
 }
 
@@ -174,35 +177,38 @@ func (cors *cors) handleNormal(c *gin.Context) {
 	fmt.Println("in normal")
 	spew.Dump("header: ", header)
 	spew.Dump("cors.normalHeaders: ", cors.normalHeaders)
-	requestHeaders := c.Request.Header
-	for key, values := range requestHeaders {
-		fmt.Printf("Original request header: %s: %v\n", key, values)
-	}
+	// requestHeaders := c.Request.Header
+	// for key, values := range requestHeaders {
+	// 	fmt.Printf("Original request header: %s: %v\n", key, values)
+	// }
 
+	// for key, value := range cors.normalHeaders {
+	// 	fmt.Println("modified code working")
+	// 	fmt.Println("key: ", key)
+	// 	fmt.Println("value: ", value)
+
+	// 	// Check if the header already exists and skip if it does
+	// 	if existingValue, exists := header[key]; exists {
+	// 		// Merge unique values
+	// 		uniqueValues := make(map[string]struct{})
+	// 		for _, v := range existingValue {
+	// 			uniqueValues[v] = struct{}{}
+	// 		}
+	// 		for _, v := range value {
+	// 			uniqueValues[v] = struct{}{}
+	// 		}
+	// 		// Convert map back to slice
+	// 		newValues := []string{}
+	// 		for v := range uniqueValues {
+	// 			newValues = append(newValues, v)
+	// 		}
+	// 		header[key] = newValues
+	// 	} else {
+	// 		header[key] = value
+	// 	}
+	// }
 	for key, value := range cors.normalHeaders {
-		fmt.Println("modified code working")
-		fmt.Println("key: ", key)
-		fmt.Println("value: ", value)
-
-		// Check if the header already exists and skip if it does
-		if existingValue, exists := header[key]; exists {
-			// Merge unique values
-			uniqueValues := make(map[string]struct{})
-			for _, v := range existingValue {
-				uniqueValues[v] = struct{}{}
-			}
-			for _, v := range value {
-				uniqueValues[v] = struct{}{}
-			}
-			// Convert map back to slice
-			newValues := []string{}
-			for v := range uniqueValues {
-				newValues = append(newValues, v)
-			}
-			header[key] = newValues
-		} else {
-			header[key] = value
-		}
+		header[key] = value
 	}
 
 }
